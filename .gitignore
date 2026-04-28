@@ -1,0 +1,26 @@
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+
+# Test output
+test-output/
+extent-reports/
+
+# App binaries
+*.apk
+*.ipa
+*.aab
+
+# Config (sensitive data)
+src/main/resources/config.properties
+
+# OS files
+.DS_Store
+Thumbs.db

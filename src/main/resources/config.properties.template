@@ -1,0 +1,21 @@
+# Appium Server
+appium.url=http://127.0.0.1:4723
+
+# Platform (android or ios)
+platform=android
+
+# Android Capabilities
+android.deviceName=YOUR_DEVICE_NAME
+android.platformVersion=YOUR_ANDROID_VERSION
+android.appPackage=YOUR_APP_PACKAGE
+android.appActivity=YOUR_APP_ACTIVITY
+android.automationName=UiAutomator2
+
+# iOS Capabilities
+ios.deviceName=YOUR_DEVICE_NAME
+ios.platformVersion=YOUR_IOS_VERSION
+ios.bundleId=YOUR_BUNDLE_ID
+ios.automationName=XCUITest
+
+# App path
+app.path=src/test/resources/apps/YOUR_APP.apk
