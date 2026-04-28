@@ -1,5 +1,6 @@
 package com.jana.base;
 
+import com.jana.utils.ConfigReader;
 import com.jana.utils.ExtentReportManager;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -13,44 +14,36 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.io.FileInputStream;
 import java.net.URL;
-import java.util.Properties;
 
 public class BaseDriver {
 
     protected AppiumDriver driver;
-    private Properties props = new Properties();
 
     @BeforeClass
     public void setUp() throws Exception {
-        // Load config.properties
-        FileInputStream fis = new FileInputStream(
-                "src/main/resources/config.properties"
-        );
-        props.load(fis);
 
-        String platform   = props.getProperty("platform").toLowerCase();
-        String appiumUrl  = props.getProperty("appium.url");
+        String platform  = ConfigReader.get("platform").toLowerCase();
+        String appiumUrl = ConfigReader.get("appium.url");
 
         DesiredCapabilities caps = new DesiredCapabilities();
 
         if (platform.equals("android")) {
-            caps.setCapability("deviceName",      props.getProperty("android.deviceName"));
+            caps.setCapability("deviceName",      ConfigReader.get("android.deviceName"));
             caps.setCapability("platformName",    "Android");
-            caps.setCapability("platformVersion", props.getProperty("android.platformVersion"));
-            caps.setCapability("appPackage",      props.getProperty("android.appPackage"));
-            caps.setCapability("appActivity",     props.getProperty("android.appActivity"));
-            caps.setCapability("automationName",  props.getProperty("android.automationName"));
+            caps.setCapability("platformVersion", ConfigReader.get("android.platformVersion"));
+            caps.setCapability("appPackage",      ConfigReader.get("android.appPackage"));
+            caps.setCapability("appActivity",     ConfigReader.get("android.appActivity"));
+            caps.setCapability("automationName",  ConfigReader.get("android.automationName"));
 
             driver = new AndroidDriver(new URL(appiumUrl), caps);
 
         } else if (platform.equals("ios")) {
-            caps.setCapability("deviceName",      props.getProperty("ios.deviceName"));
+            caps.setCapability("deviceName",      ConfigReader.get("ios.deviceName"));
             caps.setCapability("platformName",    "iOS");
-            caps.setCapability("platformVersion", props.getProperty("ios.platformVersion"));
-            caps.setCapability("bundleId",        props.getProperty("ios.bundleId"));
-            caps.setCapability("automationName",  props.getProperty("ios.automationName"));
+            caps.setCapability("platformVersion", ConfigReader.get("ios.platformVersion"));
+            caps.setCapability("bundleId",        ConfigReader.get("ios.bundleId"));
+            caps.setCapability("automationName",  ConfigReader.get("ios.automationName"));
 
             driver = new IOSDriver(new URL(appiumUrl), caps);
         }
@@ -65,7 +58,9 @@ public class BaseDriver {
                 .getInstance()
                 .createTest(testName);
         ExtentReportManager.setTest(extentTest);
-        ExtentReportManager.getTest().log(Status.INFO, "Test Started: " + testName);
+        ExtentReportManager.getTest().log(
+                Status.INFO, "Test Started: " + testName
+        );
     }
 
     @AfterMethod
